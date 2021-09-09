@@ -1,7 +1,3 @@
-using System;
-using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -9,7 +5,7 @@ using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-public class MainManager : MonoBehaviour
+public class MainManager : MonoBehaviour,ISaveable
 {
     public SaveData saveData;
     public TMP_InputField NameInputField= null;
@@ -20,6 +16,7 @@ public class MainManager : MonoBehaviour
     private int highScore;
     public int HighScore{get=>highScore;set{
         NewHighScore?.Invoke(saveData);
+        highScore = value; 
     }}
     public float duration = 1.5f;
     /// <summary>
@@ -42,6 +39,8 @@ public class MainManager : MonoBehaviour
             NameInputField = GameObject.Find("InputField").GetComponent<TMP_InputField>();
         if (NameEmptyWarning == null)
             NameEmptyWarning = GameObject.Find("NameEmptyWarning/Text").GetComponent<Animator>();
+        //Register
+        Instance.NewHighScore.AddListener(PopulateSaveData);
     }
     //these 2 for menu
     public void StartGame(){
@@ -54,6 +53,7 @@ public class MainManager : MonoBehaviour
             NameEmptyWarning.SetTrigger("on");
         }else{
             Instance.PlayerName=nameStr;
+            DontDestroyOnLoad(MainManager.Instance);
             SceneManager.LoadScene("main",LoadSceneMode.Single);
         }
     }
@@ -65,9 +65,13 @@ public class MainManager : MonoBehaviour
             Application.Quit();
         #endif
     }
-    //this one for in game.
-    public void BackToMenu(){
-        SceneManager.LoadScene("Enter Menu",LoadSceneMode.Single);
-
+    public void PopulateSaveData(SaveData a_SaveData){
+        SaveData.PlayRecord playRecord = new SaveData.PlayRecord();
+        playRecord.m_Name = PlayerName;
+        playRecord.m_Points = HighScore;
+        a_SaveData.m_playRecords.Add(playRecord);
+    }
+    public void LoadFromSaveData(SaveData a_SaveData){
+        
     }
 }

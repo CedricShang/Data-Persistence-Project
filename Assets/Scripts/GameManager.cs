@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour,ISaveable
+public class GameManager : MonoBehaviour
 {
     public SaveData.PlayRecord playerData;
     public Brick BrickPrefab;
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour,ISaveable
             }
         }
 
-        MainManager.Instance.NewHighScore.AddListener(PopulateSaveData);
+        
 
     }
 
@@ -79,10 +79,12 @@ public class GameManager : MonoBehaviour,ISaveable
             MainManager.Instance.HighScore = playerData.m_Points;
         }
     }
-    public void PopulateSaveData(SaveData a_SaveData){
-
+    //this one for in game.
+    public void BackToMenu(){
+        if(MainManager.Instance.HighScore < playerData.m_Points){
+            MainManager.Instance.HighScore = playerData.m_Points;
+        }
+        SceneManager.LoadScene("Enter Menu",LoadSceneMode.Single);
     }
-    public void LoadFromSaveData(SaveData a_SaveData){
-        
-    }
+    
 }

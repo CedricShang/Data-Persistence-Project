@@ -8,9 +8,9 @@ public class SaveData
     public struct PlayRecord
     {
         public string m_Name;
-        public int m_Score;
+        public int m_Points;
     }
-
+    public List<PlayRecord> m_playRecords;
     
     
     public string ToJson()
