@@ -5,17 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 public class MainManager : MonoBehaviour
 {
+    public SaveData saveData;
     public TMP_InputField NameInputField= null;
     public Animator NameEmptyWarning = null;
     public string PlayerName{get;set;}
+
+    public UnityEvent<SaveData> NewHighScore;
     private int highScore;
     public int HighScore{get=>highScore;set{
-        NewHighScore?.Invoke();
+        NewHighScore?.Invoke(saveData);
     }}
     public float duration = 1.5f;
     /// <summary>

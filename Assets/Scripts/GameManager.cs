@@ -7,11 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour,ISaveable
 {
-    [System.Serializable]
-    public class PlayerData{
-        public int m_Points;
-        public int m_Name;
-    }
+    public SaveData.PlayRecord playerData;
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -40,6 +36,9 @@ public class GameManager : MonoBehaviour,ISaveable
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        MainManager.Instance.NewHighScore.AddListener(PopulateSaveData);
+
     }
 
     private void Update()
@@ -68,22 +67,22 @@ public class GameManager : MonoBehaviour,ISaveable
 
     void AddPoint(int point)
     {
-        this.PlayerData.m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        playerData.m_Points += point;
+        ScoreText.text = $"Score : {playerData.m_Points}";
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-        if(MainManager.Instance.HighScore < m_Points){
-            MainManager.Instance.HighScore = m_Points;
+        if(MainManager.Instance.HighScore < playerData.m_Points){
+            MainManager.Instance.HighScore = playerData.m_Points;
         }
     }
-    void PopulateSaveData(SaveData a_SaveData){
+    public void PopulateSaveData(SaveData a_SaveData){
 
     }
-    void LoadFromSaveData(SaveData a_SaveData){
+    public void LoadFromSaveData(SaveData a_SaveData){
         
     }
 }
