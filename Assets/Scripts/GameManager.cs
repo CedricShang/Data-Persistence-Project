@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public SaveData.PlayRecord playerData;
+    public PlayerSessionData thisPlayData;
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -67,22 +67,22 @@ public class GameManager : MonoBehaviour
 
     void AddPoint(int point)
     {
-        playerData.m_Points += point;
-        ScoreText.text = $"Score : {playerData.m_Points}";
+        thisPlayData.score += point;
+        ScoreText.text = $"Score : {thisPlayData.score}";
     }
 
     public void GameOver()
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
-        if(MainManager.Instance.HighScore < playerData.m_Points){
-            MainManager.Instance.HighScore = playerData.m_Points;
+        if(MainManager.Instance.HighScore < thisPlayData.score){
+            MainManager.Instance.HighScore = thisPlayData.score;
         }
     }
     //this one for in game.
     public void BackToMenu(){
-        if(MainManager.Instance.HighScore < playerData.m_Points){
-            MainManager.Instance.HighScore = playerData.m_Points;
+        if(MainManager.Instance.HighScore < thisPlayData.score){
+            MainManager.Instance.HighScore = thisPlayData.score;
         }
         SceneManager.LoadScene("Enter Menu",LoadSceneMode.Single);
     }

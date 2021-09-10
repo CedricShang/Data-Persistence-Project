@@ -66,9 +66,9 @@ public class MainManager : MonoBehaviour,ISaveable
         #endif
     }
     public void PopulateSaveData(SaveData a_SaveData){
-        SaveData.PlayRecord playRecord = new SaveData.PlayRecord();
-        playRecord.m_Name = PlayerName;
-        playRecord.m_Points = HighScore;
+        PlayerSessionData playRecord = new PlayerSessionData();
+        playRecord.name = PlayerName;
+        playRecord.score = HighScore;
         a_SaveData.m_playRecords.Add(playRecord);
     }
     public void LoadFromSaveData(SaveData a_SaveData){

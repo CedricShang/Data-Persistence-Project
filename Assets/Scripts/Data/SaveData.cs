@@ -1,16 +1,12 @@
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
 public class SaveData
 {
-    [System.Serializable]
-    public struct PlayRecord
-    {
-        public string m_Name;
-        public int m_Points;
-    }
-    public List<PlayRecord> m_playRecords;
+    
+    public List<PlayerSessionData> m_playRecords;
     
     
     public string ToJson()
